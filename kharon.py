@@ -4,6 +4,9 @@ import os
 
 def main():
     display_menu()
+    print("┌──────────────────────────────────────────────────")
+    print("│")
+    addr = str(input("└──────⮞ IP-Adress : "))
 
 def display_menu():
     os.system("clear")
