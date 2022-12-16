@@ -1,10 +1,14 @@
 import json
+import os
+import time
 
-def check_for_all():
-    tlist = json.load(open("json/tool_list.json"))
+def get_list():
+    return json.load(open("src/json/tool_list.json"))
 
-    for tool in tlist:
-        check_for(tool)
+def check_if_exist(tool):
+    exist = False
 
-def check_for(tool_name):
-    pass
+    if exist == False:
+        print("└──────⮞ Checking tools... ({})".format(tool))
+        time.sleep(2)
+    return exist
