@@ -10,5 +10,5 @@ def check_if_exist(tool):
 
     if exist == False:
         print("└──────⮞ Checking tools... ({})".format(tool))
-        time.sleep(2)
+        #time.sleep(2)
     return exist
