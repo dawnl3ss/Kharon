@@ -1,0 +1,8 @@
+/.htpasswd            (Status: 403) [Size: 274]
+/.htaccess            (Status: 403) [Size: 274]
+/.hta                 (Status: 403) [Size: 274]
+/javascript           (Status: 301) [Size: 311] [--> http://localhost/javascript/]
+/lab                  (Status: 301) [Size: 304] [--> http://localhost/lab/]
+/learn                (Status: 301) [Size: 306] [--> http://localhost/learn/]
+/server-status        (Status: 200) [Size: 6103]
+/vendor               (Status: 301) [Size: 307] [--> http://localhost/vendor/]
