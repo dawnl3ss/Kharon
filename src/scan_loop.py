@@ -19,4 +19,12 @@ def is_scan_complete(addr, intensity_lev):
                 statements.append(True)
         nmap.close()
 
-    return statements.count(True) == 2
+    if os.path.exists(f"ressources/output/nikto-{addr}-{intensity_lev}.txt"):
+        nikto = open(f"ressources/output/nikto-{addr}-{intensity_lev}.txt", "r")
+
+        for nikto_line in nikto.readlines():
+            if "kharon_scan_complete" in nikto_line:
+                statements.append(True)
+        nikto.close()
+
+    return statements.count(True) == 3

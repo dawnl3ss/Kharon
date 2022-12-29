@@ -28,4 +28,4 @@ class fake_shell():
         return self
 
     def make(self) -> str:
-        return f"mate-terminal --working-directory={self.working_directory} -e 'sh -c \"{self.command}\"' -t '{self.title}'"
+        return f"mate-terminal --working-directory={self.working_directory} -e 'sh -c \"{self.command}\"' -t '{self.title}' --hide-menubar"
