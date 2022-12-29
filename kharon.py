@@ -7,15 +7,18 @@ import time
 import os
 import sys
 
+""" Settings """
+# terminal_type = "gnome" | set this var to your OS' terminal
+terminal_type = "mate" # I'm on parrotsec thus I use mate-terminal
+""" Settings """
+
 intensity_lev = None
 complete = False
 n = 1
 report_asking = True
-# shell_type = "bash" | set this var to 'bash' if you use bash shell env
-shell_type = "zsh" # I personally use 'zsh'
 
 def main():
-    global intensity_lev, complete, n, shell_type, report_asking
+    global intensity_lev, complete, n, terminal_type, report_asking
     display_menu()
     list = get_list()
     sys.stdout.write('\33]0;Kharon - CTF Website Scanner\a')
@@ -30,7 +33,7 @@ def main():
     print("├─" + colors.FAIL + "⮞" + colors.WARNING + " IP-Address : {}".format(addr))
     print("│")
     intensity_lev = int(input("└──────⮞ Scan intensity (1-3) : "))
-    enum = web_enum(addr, intensity_lev, shell_type)
+    enum = web_enum(addr, intensity_lev, terminal_type)
 
     enum.nmap_scan()
     enum.gobuster_scan()

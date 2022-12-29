@@ -1,9 +1,10 @@
 class fake_shell():
 
-    def __init__(self, title, working_directory):
+    def __init__(self, title, working_directory, terminal_type):
         self.title = title
         self.working_directory = working_directory
         self.command = ""
+        self.terminal_type = terminal_type
 
     def set_title(self, new):
         self.title = new
@@ -28,4 +29,4 @@ class fake_shell():
         return self
 
     def make(self) -> str:
-        return f"mate-terminal --working-directory={self.working_directory} -e 'sh -c \"{self.command}\"' -t '{self.title}' --hide-menubar"
+        return f"{self.terminal_type}-terminal --working-directory={self.working_directory} -e 'sh -c \"{self.command}\"' -t '{self.title}' --hide-menubar"
