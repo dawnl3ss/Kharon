@@ -1,6 +1,6 @@
 <div align="center">
     <h3>🔎 Kharon is a simple web-server enumeration tool designed for CTF 🔍</h3>
-    <h3>💡 It gathers NMAP, GoBuster and Nikto scans. 💡</h3>
+    <h3>💡 It gathers NMAP, GoBuster and Nikto scans 💡</h3>
     <img src="https://github.com/4m4Sec/Kharon/blob/main/images/shell.png">
 </div>
 
