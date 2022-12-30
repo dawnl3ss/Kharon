@@ -1,6 +1,6 @@
 from src.shell.fake_shell import fake_shell
 import os
-    
+
 class web_enum():
 
     def __init__(self, addr, intensity, terminal_type):
@@ -10,7 +10,14 @@ class web_enum():
 
     def nmap_scan(self):
         shell = fake_shell(f"NMAP Scan - {self.addr} - Kharon", os.getcwd(), self.terminal_type)
-        shell.set_command(f"nmap -A {self.addr} -oN ressources/output/nmap-{self.addr}-{self.intensity}.txt")
+
+        if self.intensity == 1:
+            shell.set_command(f"nmap -A {self.addr} -oN ressources/output/nmap-{self.addr}-{self.intensity}.txt")
+        elif self.intensity == 2:
+            shell.set_command(f"nmap -p 1-20000 -A {self.addr} -oN ressources/output/nmap-{self.addr}-{self.intensity}.txt")
+        elif self.intensity == 3:
+            shell.set_command(f"nmap -p- -A {self.addr} -oN ressources/output/nmap-{self.addr}-{self.intensity}.txt")
+
         shell.append_command(f"echo kharon_scan_complete >> ressources/output/nmap-{self.addr}-{self.intensity}.txt")
         return os.system(shell.make())
     
