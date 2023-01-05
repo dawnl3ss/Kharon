@@ -2,29 +2,22 @@ import os
 
 def is_scan_complete(addr, intensity_lev):
     statements = []
+    complete = []
 
-    if os.path.exists(f"ressources/output/gobuster-{addr}-{intensity_lev}.txt"):
-        gobuster = open(f"ressources/output/gobuster-{addr}-{intensity_lev}.txt", "r")
+    if os.path.exists(f"ressources/output/{addr}-{intensity_lev}/completed.txt"):
+        file = open(f"ressources/output/{addr}-{intensity_lev}/completed.txt", "r")
 
-        for gb_line in gobuster.readlines():
-            if "kharon_scan_complete" in gb_line:
+        for f_line in file.readlines():
+            if "kharon_scan_complete_nmap" in f_line:
                 statements.append(True)
-        gobuster.close()
-
-    if os.path.exists(f"ressources/output/nmap-{addr}-{intensity_lev}.txt"):
-        nmap = open(f"ressources/output/nmap-{addr}-{intensity_lev}.txt", "r")
-
-        for nmap_line in nmap.readlines():
-            if "kharon_scan_complete" in nmap_line:
+                complete.append("nmap")
+            elif "kharon_scan_complete_ffuf" in f_line:
                 statements.append(True)
-        nmap.close()
-
-    if os.path.exists(f"ressources/output/nikto-{addr}-{intensity_lev}.txt"):
-        nikto = open(f"ressources/output/nikto-{addr}-{intensity_lev}.txt", "r")
-
-        for nikto_line in nikto.readlines():
-            if "kharon_scan_complete" in nikto_line:
+                complete.append("ffuf")
+            elif "kharon_scan_complete_nikto" in f_line:
                 statements.append(True)
-        nikto.close()
+                complete.append("nikto")
+        file.close()
 
-    return statements.count(True) == 3
+    return (statements.count(True) == 3, complete)
+

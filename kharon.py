@@ -34,16 +34,51 @@ def main():
     print("│")
     intensity_lev = int(input("└──────⮞ Scan intensity (1-3) : "))
     enum = web_enum(addr, intensity_lev, terminal_type)
-
+    os.system(f"mkdir ressources/output/{addr}-{intensity_lev}/")
     enum.nmap_scan()
-    enum.gobuster_scan()
+    enum.ffuf_scan()
     enum.nikto_scan()
 
     while complete != True:
         display_menu()
         do_graphic_loop(addr)
-        if is_scan_complete(addr, intensity_lev):
+        scan = is_scan_complete(addr, intensity_lev)
+        if scan[0]:
             complete = True
+        elif len(scan[1]) != 0 and len(scan[1]) < 3:
+            display_menu()
+            print("├─" + colors.FAIL + "⮞" + colors.WARNING + " IP-Address : {}".format(addr))
+            print("│")
+            print("├─" + colors.FAIL + "⮞" + colors.WARNING + " Scan intensity : {}".format(intensity_lev))
+            print("│")
+            print("├─" + colors.FAIL + "⮞" + colors.WARNING + " Scan still running...")
+            print("│")
+            report = input("└──────⮞ Choose report ({}, q) : ".format(", ".join(scan[1])))
+
+            if report in scan[1]:
+                display_menu()
+                print("├─" + colors.FAIL + "⮞" + colors.WARNING + " IP-Address : {}".format(addr))
+                print("│")
+                print("├─" + colors.FAIL + "⮞" + colors.WARNING + " Scan intensity : {}".format(intensity_lev))
+                print("│")
+                print("├─" + colors.FAIL + "⮞" + colors.WARNING + " App report : {}".format(report))
+                print("│")
+                file = open(f"ressources/output/{addr}-{intensity_lev}/{report}.txt", "r")
+
+                for file_line in file.readlines():
+                    print("│ " + file_line, end='')
+                file.close()
+                print("│")
+                quit = input("└──────⮞ Press (q) to quit : ")
+                continue
+            elif report == 'q':
+                print("")
+                print(colors.FAIL + "💀" + colors.WARNING + " Closing Kharon... Bye !")
+                report_asking = False
+            else:
+                continue
+        elif len(scan[1]) == 3:
+            break
         time.sleep(1)
 
     while report_asking:
@@ -52,9 +87,9 @@ def main():
         print("│")
         print("├─" + colors.FAIL + "⮞" + colors.WARNING + " Scan intensity : {}".format(intensity_lev))
         print("│")
-        report = input("└──────⮞ Choose report (nmap, gobuster, nikto, q) : ")
+        report = input("└──────⮞ Choose report (nmap, ffuf, nikto, q) : ")
 
-        if report in ("nmap", "gobuster", "nikto"):
+        if report in ("nmap", "ffuf", "nikto"):
             display_menu()
             print("├─" + colors.FAIL + "⮞" + colors.WARNING + " IP-Address : {}".format(addr))
             print("│")
@@ -62,7 +97,7 @@ def main():
             print("│")
             print("├─" + colors.FAIL + "⮞" + colors.WARNING + " App report : {}".format(report))
             print("│")
-            file = open(f"ressources/output/{report}-{addr}-{intensity_lev}.txt", "r")
+            file = open(f"ressources/output/{addr}-{intensity_lev}/{report}.txt", "r")
 
             for file_line in file.readlines():
                 print("│ " + file_line, end='')
